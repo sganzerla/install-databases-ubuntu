@@ -71,7 +71,9 @@ sudo apt-get update
 sudo apt-get install -y mssql-server
 ```
 
-Configurando instância, escolha da versão, idioma e definição de senha alfanumérica (Especifique uma senha forte para a conta SA (comprimento mínimo de 8 caracteres, incluindo letras maiúsculas e minúsculas, 10 dígitos básicos e/ou símbolos não alfanuméricos).
+Configurando instância, escolha da versão, idioma e definição de senha alfanumérica.
+
+Especifique uma senha forte para a conta SA (comprimento mínimo de 8 caracteres, incluindo letras maiúsculas e minúsculas, 10 dígitos básicos e/ou símbolos não alfanuméricos.
 
 ```
 sudo /opt/mssql/bin/mssql-conf setup
@@ -87,6 +89,103 @@ systemctl status mssql-server --no-pager
 
 Para dar acesso externo necessário abrir porta `TCP` do `SQL Server` no `firewall` o padrão é 1433.
 
+```
+sudo apt-get install ufw
+sudo ufw allow 1433/tcp
+sudo ufw enable
+sudo ufw status verbose
+```
+
+## Instalação Ferramentas Gerenciamento
+
+Para criar um banco de dados, é necessário conectar-se a uma ferramenta que pode executar instruções `Transact-SQL` no `SQL Server`. As seguintes etapas instalam as ferramentas de linha de comando do `SQL Server`: [sqlcmd](https://docs.microsoft.com/pt-br/sql/tools/sqlcmd-utility?view=sql-server-ver15) e [bcp](https://docs.microsoft.com/pt-br/sql/tools/bcp-utility?view=sql-server-ver15).
+
+### mssql-tools
+
+Importar as chaves `GPG` do repositório público.
+
+```
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+```
+
+Registro no SourceList
+
+```
+curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+```
+
+Instalar msql-tools
+
+```
+sudo apt-get update
+sudo apt-get install mssql-tools unixodbc-dev
+```
+
+### Opcional comando sqlcmd/bcp
+
+Tornar comando `sqlcmd/bcp` disponível no shell de Bash para sessões de logon
+
+```
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+```
+
+Tornar comando `sqlcmd/bcp` disponível no shell de Bash para sessões interativas que não são de logon
+
+```
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+## Testando Conexão localhost
+
+Utilizando o `sqlcmd` para conectar-se a uma instância local do `MSQL Server`.
+
+### Conectando
+
+Execute o sqlcmd com parâmetros para o nome do SQL Server (-S), o nome de usuário (-U) e a senha (-P). Neste tutorial, você está se conectando localmente, portanto, o nome do servidor é localhost. O nome de usuário é SA e a senha é a mesma fornecida para a conta SA durante a instalação.
+
+```
+sqlcmd -S localhost -U SA -P '<YourPassword>'
+```
+
+Pode ser omitido o comando da senha ela será exigida na linha de comando
+
+```
+sqlcmd -S localhost -U SA
+```
+
+A conexão estará correta quando o shel estiver com o texto `1>`.
+
+### Criando banco de dados
+
+Criando base dados
+
+```
+CREATE DATABASE TestDB
+GO
+```
+
+Inserindo dados
+
+```
+USE TestDB
+CREATE TABLE Inventory (id INT, name NVARCHAR(50), quantity INT)
+INSERT INTO Inventory VALUES (1, 'banana', 150); INSERT INTO Inventory VALUES (2, 'orange', 154);
+GO
+```
+
+Selecionar dados
+
+```
+SELECT * FROM Inventory WHERE quantity > 152;
+GO
+```
+
+Sair prompt
+
+```
+QUIT
+```
 
 ## Fonte
 
