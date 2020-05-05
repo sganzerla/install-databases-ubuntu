@@ -96,6 +96,26 @@ sudo ufw enable
 sudo ufw status verbose
 ```
 
+### Alterando porta padrão
+
+Substituir porta padrão 1433
+
+```
+sudo /opt/mssql/bin/mssql-conf set network.tcpport <new_tcp_port>
+```
+
+Reiniciar o serviço 
+
+```
+sudo systemctl restart mssql-server
+```
+
+Conectando ao banco
+
+```
+sqlcmd -S localhost,<new_tcp_port> -U test -P test
+```
+
 ## Instalação Ferramentas Gerenciamento
 
 Para criar um banco de dados, é necessário conectar-se a uma ferramenta que pode executar instruções `Transact-SQL` no `SQL Server`. As seguintes etapas instalam as ferramentas de linha de comando do `SQL Server`: [sqlcmd](https://docs.microsoft.com/pt-br/sql/tools/sqlcmd-utility?view=sql-server-ver15) e [bcp](https://docs.microsoft.com/pt-br/sql/tools/bcp-utility?view=sql-server-ver15).
