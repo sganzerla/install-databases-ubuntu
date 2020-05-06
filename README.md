@@ -1,6 +1,6 @@
 # install-msql-ubuntu
 
-Este tutorial mostra como instalar o `MSQL Server` em um sistema operacional `Ubuntu 20.04` e versões mais antigas (testado apenas com `20.04`).
+Este tutorial mostra como instalar o `MSQL Server` em um sistema operacional `Ubuntu 20.04` e `Ubuntu 18.04`, pode ser que funcione em outras versões mas isso não foi testado.
 
 ## Pré requisitos
 
