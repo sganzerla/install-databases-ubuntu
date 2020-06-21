@@ -1,4 +1,4 @@
-# install-mysql-ubuntu
+# mysql
 
 ## Install Mysql Ubuntu 20.04
 
@@ -16,12 +16,12 @@ Tutorial by [Digital Ocean](https://www.digitalocean.com/community/tutorials/how
 
 Now change config auth mysql plugin `auth_socket` for `caching_sha2_password`
 
-    ```
+    ´´´
     sudo mysql
 
     SELECT user,authentication_string,plugin,host FROM mysql.user;
 
-    ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'password';
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'
 
     FLUSH PRIVILEGES;
 
@@ -29,7 +29,7 @@ Now change config auth mysql plugin `auth_socket` for `caching_sha2_password`
 
     exit
 
-    ```
+    ´´´
 
 ## Create User
 
