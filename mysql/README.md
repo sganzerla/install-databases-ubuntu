@@ -14,7 +14,7 @@ Writter `y` for questions in terminal and create password
 
 Tutorial by [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04-pt)
 
-Now change config auth mysql plugin `auth_socket` for `caching_sha2_password`
+Now change config auth mysql plugin `auth_socket` for `mysql_native_password`
 
     ´´´
     sudo mysql
