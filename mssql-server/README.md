@@ -205,6 +205,16 @@ Sair prompt
     QUIT
     ```
 
+### Deletando base de dados
+
+    ```
+    USE MASTER;
+    ALTER DATABASE [my_database] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [my_database];
+    
+    ```
+
+
 ## Fonte
 
 [Microsoft](https://docs.microsoft.com/pt-br/sql/linux/quickstart-install-connect-ubuntu?view=sql-server-ver15) Acessado em Maio 2020.
